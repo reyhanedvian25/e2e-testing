@@ -22,13 +22,12 @@ def test_registration_e2e(driver):
     time.sleep(2)
     assert "Account created" in driver.page_source
 
-def test_login_and_transfer(driver):
+def test_login_and_send(driver):
     driver.find_element(By.LINK_TEXT, "Login").click()
-    driver.find_element(By.ID, "email").send_keys("test@user.com")
-    driver.find_element(By.ID, "password").send_keys("password123")
-    driver.find_element(By.TAG_NAME, "button").click()
+    driver.find_element(By.ID, "email").send_keys("reyhanedvian.work@gmail.com")
+    driver.find_element(By.ID, "input PIN").send_keys("542268")
     time.sleep(2)
-    driver.find_element(By.LINK_TEXT, "Transfer").click()
+    driver.find_element(By.LINK_TEXT, "Wallet").click()
     driver.find_element(By.ID, "to_address").send_keys("valid_address")
     driver.find_element(By.ID, "amount").send_keys("1")
     driver.find_element(By.TAG_NAME, "button").click()
