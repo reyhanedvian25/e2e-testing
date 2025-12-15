@@ -1,0 +1,35 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+import pytest
+import time
+
+def driver():
+    driver = webdriver.Chrome()
+    driver.get("https://dev-starwallet.starlabs.web.id/auth")
+    yield driver
+    driver.quit()
+
+def test_registration_e2e(driver):
+    driver.find_element(By.LINK_TEXT, "Sign Up").click()
+    driver.find_element(By.ID, "username").send_keys("test1233")
+    driver.find_element(By.ID, "email").send_keys("reyhanedvian.work@gmail.com")
+    driver.find_element(By.LINK_TEXT, "Send OTP").click()
+    driver.find_element(By.ID, "OTP").send_keys("487144")
+    driver.find_element(By.ID, "phone_number").send_keys("87829222229")
+    driver.find_element(By.ID, "PIN").send_keys("542268")
+    driver.find_element(By.ID, "confirm_PIN").send_keys("542268")
+    driver.find_element(By.TAG_NAME, "button").click()  # Submit
+    time.sleep(2)
+    assert "Account created" in driver.page_source
+
+def test_login_and_transfer(driver):
+    driver.find_element(By.LINK_TEXT, "Login").click()
+    driver.find_element(By.ID, "email").send_keys("test@user.com")
+    driver.find_element(By.ID, "password").send_keys("password123")
+    driver.find_element(By.TAG_NAME, "button").click()
+    time.sleep(2)
+    driver.find_element(By.LINK_TEXT, "Transfer").click()
+    driver.find_element(By.ID, "to_address").send_keys("valid_address")
+    driver.find_element(By.ID, "amount").send_keys("1")
+    driver.find_element(By.TAG_NAME, "button").click()
+    assert "Transaction successful" in driver.page_source
